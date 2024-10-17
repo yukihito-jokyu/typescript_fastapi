@@ -1,0 +1,25 @@
+{
+
+"appId" : "com.company.app-name",
+"productName": "My Awesome App",
+"copyright" : "Copyright © year ${author}",
+
+"extraFiles" :[{
+    "from" : "../backend/dist/",
+    "to" : "lib/",
+    "filter": ["**/**"]
+}],
+"files": [
+    "build/**/*"
+],
+"directories":{
+    "output": "../dist"
+},
+"win":{
+    "target":"nsis"
+},
+"nsis":{
+    "oneClick"   : false,
+    "allowToChangeInstallationDirectory": true
+}
+}

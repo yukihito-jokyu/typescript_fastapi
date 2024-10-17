@@ -2,6 +2,46 @@
   "name": "typescript",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.js",
+  "homepage": "./",
+  "author": "Ginanjar Noviawan",
+  "license": "MIT",
+  "description": "A boilerplate for ElectronJS frontend and Python Backend",
+  "build": {
+    "appId": "com.example.myapp",
+    "productName": "myapp",
+    "copyright": "Copyright © year yukihito",
+    "extends": null,
+    "extraFiles": {
+      "from": "../backend/dist/",
+      "to": "lib/",
+      "filter": [
+        "**/**"
+      ]
+    },
+    "files": [
+      "electron/**/*",
+      "build/**/*"
+    ],
+    "directories": {
+      "output": "../dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -11,6 +51,8 @@
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.7",
+    "electron-is-dev": "^3.0.1",
+    "python-shell": "^5.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
@@ -21,7 +63,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "react-start": "cross-env BROWSER=none react-scripts start",
+    "electron-start": "wait-on http://localhost:3000 && electron .",
+    "e-start": "run-p react-start electron-start",
+    "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://127.0.0.1:3000 && tsc -p electron && electron .\"",
+    "electron-build": "npm run build && tsc -p electron && electron-builder --config electron-builder.config.json"
   },
   "eslintConfig": {
     "extends": [
@@ -43,11 +90,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^32.1.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.37.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "typescript-eslint": "^8.8.0"
+    "typescript-eslint": "^8.8.0",
+    "wait-on": "^8.0.1"
   }
 }
